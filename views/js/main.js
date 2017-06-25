@@ -521,8 +521,9 @@ function logAverageFrame(times) { // times is the array of User Timing measureme
 function updatePositions() {
     frame++;
     window.performance.mark("mark_start_frame");
-
-    var items = document.querySelectorAll('.mover');
+    // getElementsByClassName is more efficient than querySelectorAll
+    var items = document.getElementsByClassName('mover');
+    // Moved document.body request outside to prevent querying DOM in each loop
     var s = document.body.scrollTop;
     for (var i = 0; i < items.length; i++) {
         var phase = Math.sin((s / 1250) + (i % 5));
@@ -546,7 +547,9 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
     var cols = 8;
     var s = 256;
-    for (var i = 0; i < 200; i++) {
+    //get number of pizza needed
+    var numPizza = (window.innerHeight / 75) + (window.innerWidth / 75);
+    for (var i = 0; i < numPizza; i++) {
         var elem = document.createElement('img');
         elem.className = 'mover';
         elem.src = "images/pizza.png";
